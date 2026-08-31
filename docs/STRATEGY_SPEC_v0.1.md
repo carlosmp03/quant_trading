@@ -1,0 +1,1 @@
+notepad docs/STRATEGY_SPEC_v0.1.md
