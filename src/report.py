@@ -14,22 +14,49 @@ from src.metrics import calculate_period_metrics
 
 
 STRATEGIES = {
+
     "Strategy": (
         Path("data/processed/backtest_daily.parquet"),
         Path("data/processed/realized_weights.parquet"),
     ),
+
     "Inverse Vol": (
         Path("data/processed/benchmarks/inverse_vol_daily.parquet"),
         Path("data/processed/benchmarks/inverse_vol_weights.parquet"),
     ),
+
     "Equal Weight": (
         Path("data/processed/benchmarks/equal_weight_daily.parquet"),
         Path("data/processed/benchmarks/equal_weight_weights.parquet"),
     ),
+
     "SPY": (
         Path("data/processed/benchmarks/spy_buy_hold_daily.parquet"),
         Path("data/processed/benchmarks/spy_buy_hold_weights.parquet"),
     ),
+
+    "Exposure Matched InvVol": (
+        Path(
+            "data/processed/benchmarks/"
+            "exposure_matched_inverse_vol_daily.parquet"
+        ),
+        Path(
+            "data/processed/benchmarks/"
+            "exposure_matched_inverse_vol_weights.parquet"
+        ),
+    ), 
+
+    "Constant Exposure InvVol": (
+        Path(
+            "data/processed/benchmarks/"
+            "constant_exposure_inverse_vol_daily.parquet"
+        ),
+        Path(
+            "data/processed/benchmarks/"
+            "constant_exposure_inverse_vol_weights.parquet"
+        ),
+    ),
+
 }
 
 
