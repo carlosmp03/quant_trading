@@ -227,3 +227,83 @@ Sanity check подтвердил, что вариант с lookback 252 пол�
 3. transaction-cost sensitivity;
 4. leave-one-ETF-out analysis;
 5. walk-forward analysis.
+
+## 4. Walk-forward analysis
+
+Для дополнительной проверки стабильности Strategy 0 был проведён fixed-parameter walk-forward analysis.
+
+Параметры Strategy 0 не переоценивались и не оптимизировались. Использовались последовательные годовые out-of-sample блоки после пяти лет начальной истории:
+
+* 2007-2011 → OOS 2012
+* 2007-2012 → OOS 2013
+* ...
+* 2007-2024 → OOS 2025
+
+Поскольку Strategy 0 не содержит обучаемой модели, данный тест не является walk-forward optimization. Его цель - оценить стабильность поведения стратегии по последовательным временным блокам.
+
+Sanity check подтвердил, что stitched OOS returns в точности воспроизводят соответствующий участок замороженного backtest Strategy 0.
+
+### Годовые OOS результаты
+
+| Year | Return | Volatility | Sharpe | Max Drawdown | Average Cash |
+| ---: | -----: | ---------: | -----: | -----------: | -----------: |
+| 2012 |  3.80% |      4.56% |  0.847 |       -4.37% |       35.06% |
+| 2013 |  9.81% |      6.72% |  1.426 |       -5.75% |       33.36% |
+| 2014 |  0.05% |      5.59% |  0.036 |       -3.76% |       35.42% |
+| 2015 |  0.79% |      5.02% |  0.181 |       -4.65% |       43.26% |
+| 2016 | -0.77% |      4.05% | -0.171 |       -4.27% |       45.04% |
+| 2017 | 16.11% |      5.25% |  2.882 |       -1.81% |       18.86% |
+| 2018 | -6.48% |      8.98% | -0.703 |      -10.53% |       27.74% |
+| 2019 |  9.88% |      2.97% |  3.193 |       -1.14% |       44.99% |
+| 2020 | -0.62% |      7.72% | -0.041 |      -10.96% |       37.85% |
+| 2021 | 10.88% |      9.58% |  1.126 |       -4.61% |       20.30% |
+| 2022 | -5.80% |      5.21% | -1.124 |       -7.09% |       72.00% |
+| 2023 |  5.31% |      6.24% |  0.867 |       -7.85% |       46.46% |
+| 2024 |  9.83% |      8.47% |  1.150 |       -5.03% |       13.43% |
+| 2025 | 15.09% |      8.03% |  1.805 |       -8.07% |       10.26% |
+
+### Stitched OOS performance, 2012-2025
+
+| Metric          |   Value |
+| --------------- | ------: |
+| CAGR            |   4.62% |
+| Volatility      |   6.60% |
+| Sharpe          |   0.718 |
+| Max Drawdown    | -10.96% |
+| Calmar          |   0.421 |
+| Average Cash    |  34.58% |
+| Annual Turnover |   3.860 |
+
+Walk-forward results show substantial variation across market regimes.
+
+Strategy 0 has several strong years, but also negative or nearly flat periods. The defensive mechanism is clearly regime-dependent: for example, average cash exposure reached 72% in 2022, while in other stress periods the strategy reduced risk less aggressively.
+
+Because no parameters are re-estimated, the stitched walk-forward series is not an additional independent out-of-sample backtest. Its value is diagnostic: it shows that the behavior of Strategy 0 is not concentrated exclusively in one Train / Validation / Test split and highlights substantial year-to-year variation.
+
+---
+
+## 5. Final conclusion on Strategy 0
+
+Strategy 0 can be characterized as a defensive systematic allocation strategy rather than a return-maximizing strategy.
+
+The main findings are:
+
+1. Strategy 0 produces substantially lower volatility and drawdowns than full-risk benchmarks, but also materially lower absolute returns.
+
+2. A significant part of this defensive behavior is explained by lower average risky exposure and the resulting cash allocation.
+
+3. Dynamic trend-based exposure management can reduce drawdowns in some market regimes, but does not consistently improve Sharpe ratio across Train, Validation and Test.
+
+4. Momentum-based selection of individual ETFs also does not demonstrate a stable improvement in risk-adjusted returns.
+
+5. The strategy is reasonably robust to changes in momentum lookback, volatility window, rebalance frequency and transaction-cost assumptions.
+
+6. Leave-one-ETF-out tests show that the result is not driven entirely by one asset, although some assets, particularly IEF and GLD, materially affect the risk profile.
+
+7. Sequential annual evaluation shows significant regime dependence: Strategy 0 performs strongly in some years and poorly in others.
+
+Overall, Strategy 0 appears structurally and parametrically robust, but the current evidence does not establish robust alpha.
+
+The Strategy 0 specification therefore remains frozen and is considered complete.
+
+The next research stage is Strategy 1: a new strategy design based on the observed strengths and weaknesses of Strategy 0 rather than post-hoc optimization of its parameters.

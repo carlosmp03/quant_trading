@@ -325,15 +325,34 @@ Strategy 0 остаётся скорее defensive trend-allocation strategy, ч
 `docs/STRATEGY_0_RESULTS.md`
 
 
+### Итог Strategy 0
+
+Strategy 0 прошла baseline backtest, decomposition, robustness tests и sequential walk-forward analysis.
+
+Основной результат: стратегия демонстрирует устойчивый defensive profile с относительно низкими volatility и drawdown, однако её преимущество над простыми альтернативами не является стабильным между рыночными режимами.
+
+Значительная часть снижения риска объясняется меньшей средней risky exposure. Динамическое trend-based управление exposure и momentum-based выбор отдельных ETF могут добавлять ценность в отдельных периодах, но не показывают устойчивого улучшения risk-adjusted returns.
+
+Robustness tests показывают, что стратегия не зависит критически от точного выбора momentum lookback, volatility window, rebalance frequency или transaction-cost assumptions.
+
+Strategy 0 считается завершённой и замороженной.
+
+Подробные результаты:
+
+`docs/STRATEGY_0_RESULTS.md`
+
+
+
 ## Структура проекта
 
 ```text
 quant_trading/
 ├── docs/
-│   ├── requirements.txt
+│    ├── requirements.txt
 │   ├── STRATEGY_SPEC_v0.1.md
-│   └── STRATEGY_0_RESULTS.md
-│   
+│   ├── STRATEGY_0_RESULTS.md
+│   ├── ROBUSTNESS_PLAN.md
+│   └── WALK_FORWARD_PLAN.md
 │
 ├── data/
 │   ├── raw/
@@ -353,9 +372,15 @@ quant_trading/
 │   ├── metrics.py
 │   ├── benchmarks.py
 │   ├── compare.py
-│   └── report.py
+│   ├── report.py
+│   ├── robustness.py
+│   └── walk_forward.py
 │
-└── tests/
+├── tests/
+│
+
+├── README.md
+└── LICENSE
 ```
 
 ## Текущий статус
@@ -376,10 +401,22 @@ quant_trading/
 * [x] Benchmark portfolios
 * [x] Exposure-matched benchmark
 * [x] Constant-exposure benchmark
-* [x] Декомпозиция trend signal
-* [ ] Robustness tests
-* [ ] Walk-forward analysis
+* [x] Декомпозиция Strategy 0
+* [x] Momentum lookback robustness
+* [x] Volatility-window robustness
+* [x] Rebalance-frequency robustness
+* [x] Transaction-cost robustness
+* [x] Leave-one-ETF-out robustness
+* [x] Robustness tests
+* [x] Walk-forward analysis
+* [x] Итоговый вывод по Strategy 0
+* [ ] Strategy 1 design
 * [ ] Paper trading
 * [ ] Small live trading
 * [ ] ML extensions
 * [ ] LLM / financial-news extensions
+
+```
+
+Я ещё вынес `requirements.txt` из `docs/` в корень и добавил `robustness.py`, `walk_forward.py`, `ROBUSTNESS_PLAN.md` и `WALK_FORWARD_PLAN.md`.
+```
