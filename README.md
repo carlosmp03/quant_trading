@@ -316,7 +316,13 @@ Strategy 0 остаётся скорее defensive trend-allocation strategy, ч
 
 Поэтому результаты Strategy 0 пока не рассматриваются как доказательство устойчивой торговой аномалии.
 
-Параметры Strategy 0 после просмотра Test остаются замороженными. Следующий этап исследования - robustness tests без оптимизации параметров.
+Параметры Strategy 0 после просмотра Test остаются замороженными.
+
+Начат этап robustness analysis. Первый тест показывает, что общий defensive profile стратегии сохраняется при изменении momentum lookback в диапазоне 126-252 торговых дней, хотя относительные результаты вариантов существенно различаются между Train, Validation и Test.
+
+Подробные результаты baseline backtest, decomposition и robustness analysis:
+
+`docs/STRATEGY_0_RESULTS.md`
 
 
 ## Структура проекта
@@ -324,7 +330,10 @@ Strategy 0 остаётся скорее defensive trend-allocation strategy, ч
 ```text
 quant_trading/
 ├── docs/
-│   └── STRATEGY_SPEC_v0.1.md
+│   ├── requirements.txt
+│   ├── STRATEGY_SPEC_v0.1.md
+│   └── STRATEGY_0_RESULTS.md
+│   
 │
 ├── data/
 │   ├── raw/
@@ -366,7 +375,7 @@ quant_trading/
 * [x] Train / Validation / Test metrics
 * [x] Benchmark portfolios
 * [x] Exposure-matched benchmark
-* [x] onstant-exposure benchmark
+* [x] Constant-exposure benchmark
 * [x] Декомпозиция trend signal
 * [ ] Robustness tests
 * [ ] Walk-forward analysis
